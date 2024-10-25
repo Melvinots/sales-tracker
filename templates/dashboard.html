@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sales Dashboard
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <form action="/dashboard" method="get">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="mb-3">
+                        <select class="form-select mx-auto w-auto" name="month">
+                            <option disabled selected>Month</option>
+                            {% for month in months %}
+                                <option value="{{ month[1] }}">{{ month[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="mb-3">
+                        <select class="form-select mx-auto w-auto" name="year">
+                            <option disabled selected>Year</option>
+                            {% for year in years %}
+                                <option value={{ year['year'] }}>{{ year['year'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-light" type="submit">Search</button>
+                </div>
+            </div>
+
+        </form>
+
+        <h5>Total Sales and Profit for {{ thismonth }} {{ thisyear }}</h5>
+        <canvas id="barChart" class="mb-5"></canvas>
+
+        </div>
+        <h5>Total Sales for the Year {{ thisyear }}</h5>
+        <canvas id="lineChart" class="mb-5"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('barChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels | safe }},
+                datasets: [{
+                    label: 'Total Sales',
+                    data: {{ values | safe }},
+                    borderWidth: 1
+                },
+                    {
+                        label: 'Total Profit',
+                        data: {{ profit | safe }},
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const context = document.getElementById('lineChart');
+
+        new Chart(context, {
+            type: 'pie',
+            data: {
+                labels: {{ month | safe }},
+                datasets: [{
+                    label: 'Total Sales',
+                    data: {{ total | safe }},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                aspectRatio: 2,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Item
+{% endblock %}
+
+{% block main %}
+    <form action="/add_item" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="item_name" placeholder="Item name" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="quantity" placeholder="Quantity" type="number" min="0">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="cost_price" placeholder="Cost Price" type="number" min="0">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="sell_price" placeholder="Selling Price" type="number" min="0">
+        </div>
+        <button class="btn btn-primary" type="submit">Insert</button>
+    </form>
+{% endblock %}

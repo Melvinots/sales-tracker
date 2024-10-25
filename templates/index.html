@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sales Journal
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped table-hover">
+        <p class="fs-1 fw-semi-bold text-dark">Today's Sales Journal</p>
+        <p class="text-start fs-4 fw-light">Date: {{ date }}</p>
+        <thead>
+            <tr>
+                <th class="text-start">TIME</th>
+                <th class="text-end">UNITS SOLD</th>
+                <th class="text-end">TOTAL</th>
+                <th class="text-end">TRANSACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td class="text-start">{{ sale.time }}</td>
+                    <td class="text-end">{{ sale.quantity }}</td>
+                    <td class="text-end">{{ sale.total }}</td>
+                    <td class="text-end">
+                        <form action="/transaction" method="post">
+                            <button class="btn btn-secondary" type="submit" value="{{ sale.time }}" name="show"><i class="bi bi-eye"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="2">TOTAL</td>
+                <td class="border-0 w-bold text-end">{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

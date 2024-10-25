@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sales
+{% endblock %}
+
+{% block main %}
+
+    <div class="row justify-content-end mb-3">
+        <div class="col-auto p-0">
+            <form action="/cancel" method="post">
+                <div class="text-end ">
+                    <button class="btn btn-light py-1 px-2 " type="submit">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-auto ps-3">
+            <form action="/insert" method="post">
+                <div class="text-end">
+                    <button class="btn btn-warning py-1 px-2 " type="submit">Complete Purchase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <form action="/sale" method="get" class="mb-2">
+        <div class="row">
+            <div class="col-9 col-md-auto">
+                <input autocomplete="off" autofocus class="form-control" name="q" placeholder="Search Item" type="search">
+            </div>
+            <div class="col-3 col-md-auto">
+                <button class="btn btn-info py-1 px-2" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-start">ITEM NAME</th>
+                <th class="text-end">QUANTITY</th>
+                <th class="text-end">SELLING PRICE</th>
+                <th class="text-end">TOTAL</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td class="text-start">{{ sale.itemname }}</td>
+                    <td class="text-end">{{ sale.quantity }}</td>
+                    <td class="text-end">{{ sale.sellingprice }}</td>
+                    <td class="text-end">{{ sale.total }}</td>
+                    <td class="text-end">
+                        <form action="/remove_item" method="post">
+                            <button class="btn btn-light" type="submit" value="{{ sale.itemname }}" name="item_name"><i class="bi bi-trash-fill"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="3">TOTAL</td>
+                <td class="border-0 w-bold text-end"> {{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    <form action="/sale" method="post">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="mb-3">
+                    <select class="form-select mx-auto w-auto" name="item">
+                        <option disabled selected>Select Item</option>
+                        {% for item in items %}
+                            <option value="{{ item.itemname }}">{{ item.itemname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="quantity" placeholder="Quantity" type="number" min="1">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Insert Transaction</button>
+    </form>
+
+
+
+{% endblock %}

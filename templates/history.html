@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction History
+{% endblock %}
+
+{% block main %}
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th class="text-start">DATE</th>
+                <th class="text-end">UNITS SOLD</th>
+                <th class="text-end">TOTAL</th>
+                <th class="text-end">PROFIT</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for date in dates %}
+                <tr>
+                    <td class="text-start">{{ date.date }}</td>
+                    <td class="text-end">{{ date.quantity }}</td>
+                    <td class="text-end">{{ date.total }}</td>
+                    <td class="text-end">{{ date.profit }}</td>
+                    <td class="text-end">
+                        <form action="/day_transaction" method="post">
+                            <button class="btn btn-secondary" type="submit" value="{{ date.date }}" name="show"><i class="bi bi-eye"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="2">TOTAL</td>
+                <td class="border-0 w-bold text-end">{{ total }}</td>
+                <td class="border-0 w-bold text-end">{{ profit }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="h2 mt-3">
+        <a href="#top"><i class="bi bi-arrow-up-circle-fill"></i></a>
+    </div>
+
+
+{% endblock %}

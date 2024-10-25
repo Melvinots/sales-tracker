@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stocks
+{% endblock %}
+
+{% block main %}
+
+    <form action="/delete_item" method="post">
+        <div class="text-end mb-3">
+            <input name="item_name" value="{{ item_name }}" type="hidden">
+            <button class="btn btn-warning py-1 px-2" type="submit">Delete Item</button>
+        </div>
+    </form>
+
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th class="text-start">ITEM NAME</th>
+                <th class="text-end">QUANTITY</th>
+                <th class="text-end">COST PRICE</th>
+                <th class="text-end">SELLING PRICE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in item %}
+                <tr>
+                    <td class="text-start">{{ x.itemname }}</td>
+                    <td class="text-end">{{ x.quantity }}</td>
+                    <td class="text-end">{{ x.costprice }}</td>
+                    <td class="text-end">{{ x.sellingprice }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="/update" method="post">
+        <div class="h3 fw-bold">{{ item_name }}</div>
+        <div class="my-3 fw-bold">
+            <input name="item" value="{{ item_name }}" type="hidden">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" autofocus name="quantity" placeholder="New Quantity" type="number" min="0">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="cost_price" placeholder="New Cost Price" type="number">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="sell_price" placeholder=" New Selling Price" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+
+
+{% endblock %}

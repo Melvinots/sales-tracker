@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <p class="text-start fs-4 fw-light">Date: {{ transacts[0]['date'] }}</p>
+        <thead>
+            <tr>
+                <th class="text-start">Time</th>
+                <th class="text-end">Item Name</th>
+                <th class="text-end">Quantity Sold</th>
+                <th class="text-end">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transact in transacts %}
+                <tr>
+                    <td class="text-start">{{ transact.time }}</td>
+                    <td class="text-end">{{ transact.itemname }}</td>
+                    <td class="text-end">{{ transact.quantity }}</td>
+                    <td class="text-end">{{ transact.total }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="3">TOTAL</td>
+                <td class="border-0 w-bold text-end">{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
